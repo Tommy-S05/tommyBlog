@@ -17,8 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/index', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('/post', [App\Http\Controllers\HomeController::class, 'post'])->name('post');
+
+Route::get('/admin', function (){
+    return view('adminLTE');
+})->middleware('auth')->name('admin');
+
+Route::get('/admin/categories', [App\Http\Controllers\Admin\CategoriesController::class, 'index'])->name('admin.categories');
 
 Auth::routes();
 
