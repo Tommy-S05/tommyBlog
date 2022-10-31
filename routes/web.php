@@ -24,7 +24,8 @@ Route::get('/admin', function (){
     return view('adminLTE');
 })->middleware('auth')->name('admin');
 
-Route::get('/admin/categories', [App\Http\Controllers\Admin\CategoriesController::class, 'index'])->name('admin.categories');
+Route::get('/admin/categories', [App\Http\Controllers\Admin\CategoriesController::class, 'index'])->name('admin.categories.index');
+Route::post('/admin/categories/store', [App\Http\Controllers\Admin\CategoriesController::class, 'store'])->name('admin.categories.store');
 
 Auth::routes();
 
