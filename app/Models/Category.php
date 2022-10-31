@@ -13,4 +13,9 @@ use Illuminate\Database\Eloquent\Builder;
 class Category extends Model
 {
     protected $fillable = ['id', 'name', 'created_at', 'updated_at'];
+
+    public function posts(){
+        return $this->hasMany('App\Models\Post');
+//        return $this->hasMany(Post::class);
+    }
 }
