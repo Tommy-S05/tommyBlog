@@ -26,100 +26,38 @@
                         <table id="categories" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Rendering engine</th>
-                                <th>Browser</th>
-                                <th>Platform(s)</th>
-                                <th>Engine version</th>
-                                <th>CSS grade</th>
+                                <th>ID</th>
+                                <th>Categoria</th>
+                                <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 4.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td> 4</td>
-                                <td>X</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td>5</td>
-                                <td>C</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.5
-                                </td>
-                                <td>Win 95+</td>
-                                <td>5.5</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 6
-                                </td>
-                                <td>Win 98+</td>
-                                <td>6</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td>7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>AOL browser (AOL desktop)</td>
-                                <td>Win XP</td>
-                                <td>6</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Firefox 1.0</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Firefox 1.5</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Firefox 2.0</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Firefox 3.0</td>
-                                <td>Win 2k+ / OSX.3+</td>
-                                <td>1.9</td>
-                                <td>A</td>
-                            </tr>
+                            @foreach($categories as $category)
+                                <tr>
+                                    <td>{{ $category->id }}</td>
+                                    <td>{{ $category->name }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update-category-{{ $category->id }}">
+                                            Editar
+                                        </button>
+                                        <form action="{{ route('admin.categories.delete', $category->id) }}" method="POST">
+                                            {{ csrf_field() }}
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <!-- modal Update Category-->
+                                @include('Admin.Categories.modal-update-category')
+
+                            @endforeach
+
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Rendering engine</th>
-                                <th>Browser</th>
-                                <th>Platform(s)</th>
-                                <th>Engine version</th>
-                                <th>CSS grade</th>
+                                <th>ID</th>
+                                <th>Categoria</th>
+                                <th>Acciones</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -147,7 +85,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="name">Categoria</label>
-                            <input type="text" class="form-control" name="name" id="name" value="">
+                            <input type="text" class="form-control" name="name" id="name">
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
