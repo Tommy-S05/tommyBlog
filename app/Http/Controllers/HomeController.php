@@ -24,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        $category = Category::find(1);
+//        dd($category->posts);
         return view('posts');
     }
 

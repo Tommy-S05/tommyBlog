@@ -29,6 +29,10 @@
     Route::put('/admin/categories/update/{id}', [App\Http\Controllers\Admin\CategoriesController::class, 'update'])->name('admin.categories.update');
     Route::delete('/admin/categories/delete/{id}', [App\Http\Controllers\Admin\CategoriesController::class, 'delete'])->name('admin.categories.delete');
 
+    Route::get('/admin/posts', [App\Http\Controllers\Admin\PostsController::class, 'index'])->name('admin.posts.index');
+    Route::post('/admin/posts/store', [App\Http\Controllers\Admin\PostsController::class, 'store'])->name('admin.posts.store');
+    Route::put('/admin/posts/update/{id}', [App\Http\Controllers\Admin\PostsController::class, 'update'])->name('admin.posts.update');
+    Route::delete('/admin/posts/delete/{id}', [App\Http\Controllers\Admin\PostsController::class, 'delete'])->name('admin.posts.delete');
 
     Auth::routes();
 

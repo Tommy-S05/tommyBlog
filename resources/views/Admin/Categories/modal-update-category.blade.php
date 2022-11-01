@@ -7,6 +7,7 @@
                     <span aria-hidden="true">&times;</span></button>
             </div>
             <form action="{{ route('admin.categories.update', $category->id) }}" METHOD="POST">
+                @method('PUT')
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="form-group">
