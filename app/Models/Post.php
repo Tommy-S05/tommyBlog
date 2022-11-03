@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
-    protected $fillable = ['id', 'category_id', 'title', 'content', 'author', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'category_id', 'title', 'content', 'author', 'featured', 'created_at', 'updated_at'];
     public function category(){
 //        return $this->belongsTo('App\Models\Category');
         return $this->belongsTo(Category::class);

@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
             </div>
-            <form action="{{ route('admin.posts.update', $post->id) }}" METHOD="POST">
+            <form action="{{ route('admin.posts.update', $post->id) }}" METHOD="POST" enctype="multipart/form-data">
                 @method('PUT')
                 {{ csrf_field() }}
                 <div class="modal-body">
@@ -18,7 +18,7 @@
                     <div class="form-group">
                         <label for="category_id">Categoría</label>
                         <select name="category_id" id="category_id" class="form-control">
-                            <option value="">{{ $post->category->name }}</option>
+                            <option value="{{ $post->category->id }}">{{ $post->category->name }}</option>
                             @foreach($categories as $category)
                                 @if($category->name != $post->category->name)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -30,6 +30,11 @@
                     <div class="form-group">
                         <label for="author">Autor</label>
                         <input type="text" class="form-control" name="author" id="author" value="{{ $post->author }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="featured">Imagen Principal</label>
+                        <input type="file" class="form-control" name="featured" id="featured" value="">
                     </div>
 
                     <div class="form-group">

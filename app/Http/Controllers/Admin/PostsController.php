@@ -28,7 +28,24 @@
 //            $newCategory = new Category();
 //            $newCategory->name = $request->name;
 //            $newCategory->save();
-            $newPost = Post::create($request->all());
+
+            if ($request->hasFile('featured')){
+                $file = $request->file('featured');
+                $destinationPath = 'images/featureds/';
+                $filename = time() . "-" . $file->getClientOriginalName();
+                $uploadSuccess = $request->file('featured')->move($destinationPath, $filename);
+                $request->featured = "".$destinationPath . $filename;
+
+                $newPost = new Post();
+                $newPost->category_id = $request->category_id;
+                $newPost->title = $request->title;
+                $newPost->content = $request->content;
+                $newPost->author = $request->author;
+                $newPost->featured = $request->featured;
+                $newPost->save();
+//                $newPost = Post::create($request->all());
+            }
+
             return redirect()->back();
 //            return response()->json(
 //                [
@@ -42,7 +59,23 @@
 //
         public function update(Request $request, $id){
             $post = Post::find($id);
-            $post->update($request->all());
+//
+            if ($request->hasFile('featured')){
+                $file = $request->file('featured');
+                $destinationPath = 'images/featureds/';
+                $filename = time() . "-" . $file->getClientOriginalName();
+                $uploadSuccess = $request->file('featured')->move($destinationPath, $filename);
+                $request->featured = "".$destinationPath . $filename;
+                $post->featured = $request->featured;
+            }
+//
+            $post->category_id = $request->category_id;
+            $post->title = $request->title;
+            $post->content = $request->content;
+            $post->author = $request->author;
+            $post->save();
+
+//            $post->update($request->all());
             return redirect()->back();
         }
 //

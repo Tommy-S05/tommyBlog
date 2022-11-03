@@ -30,6 +30,7 @@
                                 <th>ID</th>
                                 <th>Post</th>
                                 <th>Categoría</th>
+                                <th>Imagen</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -42,6 +43,9 @@
                                     <td>{{ $post->id }}</td>
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->category->name }}</td>
+                                    <td>
+                                        <img src="{{ asset($post->featured) }}" alt="{{ $post->title }}" width="100px" class="img-fluid img-thumbnail rounded mx-auto d-block">
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update-post-{{ $post->id }}">
                                             Editar
@@ -65,6 +69,7 @@
                                 <th>ID</th>
                                 <th>Post</th>
                                 <th>Categoría</th>
+                                <th>Imagen</th>
                                 <th>Acciones</th>
                             </tr>
                             </tfoot>
@@ -88,7 +93,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="{{ route('admin.posts.store') }}" METHOD="POST">
+                <form action="{{ route('admin.posts.store') }}" METHOD="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="modal-body">
                         <div class="form-group">
@@ -112,8 +117,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="featured">Imagen Principal</label>
+                            <input type="file" class="form-control" name="featured" id="featured">
+                        </div>
+
+                        <div class="form-group">
                             <label for="content">Contenido</label>
-                            <textarea class="form-control" name="content" id="content" cols="30" rows="7"></textarea>
+                            <textarea class="form-control" name="content" id="content" cols="30" rows="5"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
