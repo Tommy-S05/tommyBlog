@@ -33,9 +33,9 @@
                                     <small class="card-txt-category">Categoría: {{ $post->category->name }}</small>
                                     <h5 class="card-title my-2">{{ $post->title }}</h5>
                                     <div class="d-card-text">
-                                        {{ $post->content }}
+                                        {{ Str::limit($post->content, 210, '...') }}
                                     </div>
-                                    <a href="#" class="post-link"><b>Leer más</b></a>
+                                    <a href="{{ route('post.post-id', $post->id) }}" class="post-link"><b>Leer más</b></a>
                                     <hr>
                                     <div class="row">
                                         <div class="col-6 text-left">

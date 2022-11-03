@@ -19,7 +19,7 @@
 
     Route::get('/index', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
     Route::get('/posts/{category}', [App\Http\Controllers\HomeController::class, 'postByCategory'])->name('posts.category');
-    Route::get('/post', [App\Http\Controllers\HomeController::class, 'post'])->name('post');
+    Route::get('/post/{post_id}', [App\Http\Controllers\HomeController::class, 'post'])->name('post.post-id');
 
     Route::get('/admin', function () {
         return view('adminLTE');
