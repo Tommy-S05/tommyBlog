@@ -6,6 +6,7 @@
     use App\Models\Category;
     use App\Models\Post;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\DB;
 
     class PostsController extends Controller
     {
@@ -13,10 +14,30 @@
             $this->middleware('auth');
         }
 
-        public function index() {
-//            dd(Category::all());
-            $posts = Post::all();
+        public function getAll(){
+            $posts = Post::getAllPosts();
             $categories = Category::all();
+
+            $data = [
+              'posts' => $posts,
+              'categories' => $categories
+            ];
+
+            return response()->json(
+                [
+                    "Result" => 1,
+                    "Mensaje" => "Registros Obtenidos",
+                    "data" => $data
+                ],
+                200
+            );
+        }
+
+        public function index() {
+            $response = $this->getAll()->getData();
+            $posts = $response->data->posts;
+            $categories = $response->data->categories;
+
             return view('Admin.Posts.index',
                 [
                     'posts' => $posts,
@@ -24,10 +45,7 @@
                 ]);
         }
 
-        public function store(Request $request) {
-//            $newCategory = new Category();
-//            $newCategory->name = $request->name;
-//            $newCategory->save();
+        public function create(Request $request){
 
             if ($request->hasFile('featured')){
                 $file = $request->file('featured');
@@ -46,18 +64,24 @@
 //                $newPost = Post::create($request->all());
             }
 
-            return redirect()->back();
-//            return response()->json(
-//                [
-//                    "Result" => 1,
-//                    "Mensaje" => "Registro agregado",
-//                    "Data" => $newCategory
-//                ],
-//                200);
 
+            return response()->json(
+                [
+                    "Result" => 1,
+                    "Mensaje" => "Registro agregado",
+                    "Data" => $newPost
+                ],
+                200
+            );
         }
-//
-        public function update(Request $request, $id){
+
+        public function store(Request $request) {
+            $response = $this->create($request)->getData();
+
+            return redirect()->back();
+        }
+
+        public function modify(Request $request, $id){
             $post = Post::find($id);
 //
             if ($request->hasFile('featured')){
@@ -75,13 +99,39 @@
             $post->author = $request->author;
             $post->save();
 
-//            $post->update($request->all());
+            return response()->json(
+                [
+                    "Result" => 1,
+                    "Mensaje" => "Registro modificado",
+                    "Data" => $post
+                ],
+                200
+            );
+        }
+
+        public function update(Request $request, $id){
+            $response = $this->modify($request, $id)->getData();
+
             return redirect()->back();
         }
-//
-        public function delete($id){
+
+        public function destroy($id){
             $post = Post::find($id);
             $post->delete();
+
+            return response()->json(
+                [
+                    "Result" => 1,
+                    "Mensaje" => "Registro eliminado",
+                    "Data" => null
+                ],
+                200
+            );
+        }
+
+        public function delete($id){
+            $response = $this->destroy($id)->getData();
+
             return redirect()->back();
         }
     }

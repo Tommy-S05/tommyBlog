@@ -17,37 +17,83 @@
             $this->middleware('auth');
         }
 
-        public function index() {
-//            dd(Category::all());
+        public function getAll(){
             $categories = Category::all();
-            return view('Admin.Categories.index', ['categories' => $categories]);
+            return response()->json(
+                [
+                    "Result" => 1,
+                    "Mensaje" => "Registros Obtenidos",
+                    "data" => $categories
+                ],
+                200
+            );
+        }
+
+        public function index() {
+            $response = $this->getAll()->getData();
+            $categories = $response->data;
+
+            return view('Admin.Categories.index',
+                [
+                    'categories' => $categories
+                ]
+            );
+        }
+
+        public function create(Request $request){
+            $newCategory = Category::create($request->all());
+
+            return response()->json(
+                [
+                    "Result" => 1,
+                    "Mensaje" => "Registro Agregado",
+                    "data" => $newCategory
+                ],
+                200);
         }
 
         public function store(Request $request) {
-//            $newCategory = new Category();
-//            $newCategory->name = $request->name;
-//            $newCategory->save();
-            $newCategory = Category::create($request->all());
-            return redirect()->back();
-//            return response()->json(
-//                [
-//                    "Result" => 1,
-//                    "Mensaje" => "Registro agregado",
-//                    "Data" => $newCategory
-//                ],
-//                200);
+            $response = $this->create($request)->getData();
 
+            return redirect()->back();
+        }
+
+        public function modify(Request $request, $id){
+            $category = Category::find($id);
+            $category->update($request->all());
+
+            return response()->json(
+                [
+                    "Result" => 1,
+                    "Mensaje" => "Registro modificado",
+                    "Data" => $category
+                ]
+            );
         }
 
         public function update(Request $request, $id){
-            $category = Category::find($id);
-            $category->update($request->all());
+            $response = $this->modify($request, $id)->getData();
+
             return redirect()->back();
         }
 
-        public function delete($id){
+        public function destroy($id){
             $category = Category::find($id);
             $category->delete();
+
+            return response()->json(
+                [
+                    "Result" => 1,
+                    "Mensaje" => "Registro eliminado",
+                    "Data" => null
+                ],
+                200
+            );
+        }
+
+        public function delete($id){
+            $response = $this->destroy($id)->getData();
+
             return redirect()->back();
         }
     }

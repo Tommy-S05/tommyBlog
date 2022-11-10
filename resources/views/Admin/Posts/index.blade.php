@@ -35,14 +35,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @php($i = 0)
+                            @php
+                                $i = 0;
+                            @endphp
                             @foreach($posts as $post)
-                                @php($i++)
+                                @php
+                                    $i++;
+                                @endphp
                                 <tr>
                                     <td>{{ $i }}</td>
                                     <td>{{ $post->id }}</td>
                                     <td>{{ $post->title }}</td>
-                                    <td>{{ $post->category->name }}</td>
+                                    <td>{{ $post->name }}</td>
                                     <td>
                                         <img src="{{ asset($post->featured) }}" alt="{{ $post->title }}" width="100px" class="img-fluid img-thumbnail rounded mx-auto d-block">
                                     </td>

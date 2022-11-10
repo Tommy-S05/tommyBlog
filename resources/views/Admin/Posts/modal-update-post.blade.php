@@ -18,9 +18,11 @@
                     <div class="form-group">
                         <label for="category_id">Categoría</label>
                         <select name="category_id" id="category_id" class="form-control">
-                            <option value="{{ $post->category->id }}">{{ $post->category->name }}</option>
+                            <option value="{{ $post->category_id }}">
+                                {{ $post->name }}
+                            </option>
                             @foreach($categories as $category)
-                                @if($category->name != $post->category->name)
+                                @if($category->name != $post->name)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endif
                             @endforeach
